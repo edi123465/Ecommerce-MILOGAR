@@ -41,10 +41,12 @@ $productos = $controller->getAllProductos();
                     <th>Precio 2</th>
                     <th>Precio 3</th>
                     <th>Precio 4</th>
-
                     <th>Stock</th>
                     <th>Categoría</th>
                     <th>Código de Barras</th>
+                    <th>Imagen</th>
+                    <th>Estado</th>
+                    <th>fecha de creacion</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -63,6 +65,10 @@ $productos = $controller->getAllProductos();
                             <td><?php echo number_format($producto['stock'], 2); ?></td>
                             <td><?php echo $producto['subcategoria_id']; ?></td>
                             <td><?php echo $producto['codigo_barras']; ?></td>
+                            <td><?php echo $producto['imagen']; ?></td>
+                            <td><?php echo $producto['isActive']; ?></td>
+                            <td><?php echo $producto['fechaCreacion']; ?></td>
+
                             <td>
                                 <a href="edit.php?id=<?php echo $producto['id']; ?>">Editar</a>
                                 <a href="delete.php?id=<?php echo $producto['id']; ?>" onclick="return confirm('¿Estás seguro de eliminar este producto?');">Eliminar</a>
