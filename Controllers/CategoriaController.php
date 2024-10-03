@@ -10,7 +10,7 @@ class CategoriaController {
     }
 
     public function getAll() {
-        $query = "SELECT id, nombre, descripcion, IsActive, fechaCreacion FROM " . $this->table;
+        $query = "SELECT id, nombreCategoria, descripcionCategoria, IsActive, fechaCreacion FROM " . $this->table;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -18,20 +18,20 @@ class CategoriaController {
 
     public function store($data) {
         $data = [
-            'nombre' => $_POST['categoriaName'],
-            'descripcion' => $_POST['categoriaDescription'],
-            'isActive' => isset($_POST['isActive']) ? 1 : 0 // Asegúrate de que el valor es 0 o 1
+            'nombreCategoria' => $_POST['categoriaName'], // Cambia el índice a 'nombreCategoria'
+            'descripcionCategoria' => $_POST['categoriaDescription'], // Cambia el índice a 'descripcionCategoria'
+            'isActive' => isset($_POST['IsActive']) ? 1 : 0  // Asegúrate de que es 0 o 1
         ];
 
         // Prepara la consulta SQL para insertar en la tabla Categorías
-        $query = "INSERT INTO " . $this->table . " (nombre, descripcion, isActive, fechaCreacion) 
-              VALUES (:nombre, :descripcion, :isActive, GETDATE())"; // Usamos GETDATE() para SQL Server
+        $query = "INSERT INTO " . $this->table . " (nombreCategoria, descripcionCategoria, isActive, fechaCreacion) 
+              VALUES (:nombreCategoria, :descripcionCategoria, :isActive, GETDATE())"; // Usamos GETDATE() para SQL Server
         // Prepara la declaración
         $stmt = $this->conn->prepare($query);
 
         // Vincula los parámetros
-        $stmt->bindParam(':nombre', $data['nombre']);
-        $stmt->bindParam(':descripcion', $data['descripcion']);
+        $stmt->bindParam(':nombreCategoria', $data['nombreCategoria']);
+        $stmt->bindParam(':descripcionCategoria', $data['descripcionCategoria']);
         $stmt->bindParam(':isActive', $data['isActive']);
 
         // Ejecutar la consulta
@@ -55,7 +55,7 @@ class CategoriaController {
     }
 
     public function getById($id) {
-        $query = "SELECT ID, nombre, descripcion, IsActive FROM " . $this->table . " WHERE ID = :id";
+        $query = "SELECT ID, nombreCategoria, descripcionCategoria, IsActive FROM " . $this->table . " WHERE ID = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
@@ -72,11 +72,11 @@ class CategoriaController {
     }
 
     public function update($id, $data) {
-        $query = "UPDATE " . $this->table . " SET nombre = :nombre, descripcion = :descripcion, isActive = :isActive WHERE id = :id";
+        $query = "UPDATE " . $this->table . " SET nombreCategoria = :nombreCategoria, descripcionCategoria = :descripcionCategoria, isActive = :isActive WHERE id = :id";
         $stmt = $this->conn->prepare($query);
 
-        $stmt->bindParam(':nombre', $data['nombre']);
-        $stmt->bindParam(':descripcion', $data['descripcion']);
+        $stmt->bindParam(':nombreCategoria', $data['nombre']);
+        $stmt->bindParam(':descripcionCategoria', $data['descripcion']);
         $stmt->bindParam(':isActive', $data['isActive'], PDO::PARAM_BOOL); // Asegúrate de que es un booleano
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
@@ -86,7 +86,6 @@ class CategoriaController {
             header("location: index.php");
 
             return true;
-
         } else {
             $errorInfo = $stmt->errorInfo();
             echo "Error al actualizar: " . $errorInfo[2]; // Mostrar el error si algo falla

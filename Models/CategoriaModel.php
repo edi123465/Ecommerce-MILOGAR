@@ -5,7 +5,7 @@ require_once __DIR__ . "/../Config/db.php";
 class CategoriaModel {
 
     private $conn;
-    private $table = 'Categorias';
+    private $table = 'Subcategorias';
     public $RolID;
     public $RolName;
     public $RolDescription;
@@ -18,7 +18,7 @@ class CategoriaModel {
     }
 
     public function getAll() {
-        $query = "SELECT * FROM Categorias";
+        $query = "SELECT * FROM Subcategorias";
         $stmt = $this->conn->prepare($query);
 
         if ($stmt->execute()) {
@@ -44,7 +44,7 @@ class CategoriaModel {
         }
 
         // Prepara la consulta SQL para la tabla Categorías
-        $query = "INSERT INTO Categorias (nombre, descripcion, isActive, fechaCreacion)
+        $query = "INSERT INTO Categorias (nombreCategoria, descripcionCategoria, isActive, fechaCreacion)
               VALUES (:nombre, :descripcion, :isActive, :fechaCreacion)";
 
         // Prepara la declaración

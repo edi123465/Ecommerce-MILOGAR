@@ -14,7 +14,7 @@ $controller = new SubcategoriaController($connection);
 
 // Verificar si se proporciona un ID
 if (isset($_GET['id'])) {
-    $subcategoria = $controller->edit((int)$_GET['id']); // Obtener la subcategoría por ID
+    $subcategoria = $controller->getById((int)$_GET['id']); // Obtener la subcategoría por ID
 } else {
     echo "ID no válido.";
     exit;
@@ -26,10 +26,17 @@ if (isset($_GET['id'])) {
 <head>
     <title>Editar Subcategoría</title>
 </head>
+<script>
+function confirmUpdate() {
+    return confirm("¿Estás seguro de que deseas actualizar esta subcategoría?");
+}
+
+
+</script>
 <body>
 
 <h1>Editar Subcategoría</h1>
-<form action="index.php?action=update" method="POST">
+<form action="update.php?id=<?= htmlspecialchars($subcategoria['id']) ?>" method="POST" onsubmit="return confirmUpdate();">
     <input type="hidden" name="id" value="<?php echo $subcategoria['id']; ?>"> <!-- ID oculto -->
     
     <label for="nombre">Nombre de la subcategoría:</label>
@@ -61,6 +68,8 @@ if (isset($_GET['id'])) {
 
     <button type="submit">Actualizar Subcategoría</button>
 </form>
+<button type="submit"><a href="index.php">Regresar a la consulta</a></button>
 
+<script src="../../assets/js/validaciones.js"></script>
 </body>
 </html>

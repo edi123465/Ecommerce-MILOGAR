@@ -41,7 +41,7 @@ class SubcategoriaModel {
 
     // Crear una nueva subcategoría
     public function create($data) {
-        $query = "INSERT INTO " . $this->table . " (nombre, descripcion, categoria_id, isActive, fechaCreacion) 
+        $query = "INSERT INTO " . $this->table . " (nombrSubcategoria, descripcionSubcategoria, categoria_id, isActive, fechaCreacion) 
               VALUES (:nombre, :descripcion, :categoria_id, :isActive, GETDATE())";
         $stmt = $this->conn->prepare($query);
 
@@ -71,25 +71,32 @@ class SubcategoriaModel {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Actualizar una subcategoría
-    public function update($id, $nombre, $descripcion, $categoria_id, $isActive) {
+    public function update($data) {
         $query = "UPDATE " . $this->table . " 
-              SET nombre = :nombre, descripcion = :descripcion, categoria_id = :categoria_id, isActive = :isActive 
+              SET nombrSubcategoria = :nombrSubcategoria,
+                  descripcionSubcategoria = :descripcionSubcategoria,
+                  categoria_id = :categoria_id,
+                  isActive = :isActive 
               WHERE id = :id";
         $stmt = $this->conn->prepare($query);
 
-        // Enlace de parámetros
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT); // Asegúrate de usar el ID recibido
-        $stmt->bindParam(':nombre', $nombre); // Usa el valor pasado al método
-        $stmt->bindParam(':descripcion', $descripcion); // Usa el valor pasado al método
-        $stmt->bindParam(':categoria_id', $categoria_id, PDO::PARAM_INT);
-        $stmt->bindParam(':isActive', $isActive, PDO::PARAM_BOOL); // Usa el valor pasado al método
-        
+        // Vincular los parámetros
+        $stmt->bindParam(':nombrSubcategoria', $data['nombrSubcategoria']);
+        $stmt->bindParam(':descripcionSubcategoria', $data['descripcionSubcategoria']);
+        $stmt->bindParam(':categoria_id', $data['categoria_id'], PDO::PARAM_INT);
+        $stmt->bindParam(':isActive', $data['isActive'], PDO::PARAM_BOOL);
+        $stmt->bindParam(':id', $data['id'], PDO::PARAM_INT);
+
         // Ejecutar la consulta
         if ($stmt->execute()) {
-            return true; // Si la ejecución es exitosa
+            // Redirigir a la página de índice
+            header('Location: index.php');
+            exit;
+        } else {
+            // Captura el error si algo falla
+            $errorInfo = $stmt->errorInfo();
+            echo "Error en la base de datos: " . $errorInfo[2];
         }
-        return false; // Si hay un error
     }
 
     // Eliminar una subcategoría

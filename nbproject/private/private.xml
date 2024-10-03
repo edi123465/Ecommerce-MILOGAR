@@ -3,11 +3,25 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Milogar/Controllers/LoginController.php</file>
-            <file>file:/C:/xampp/htdocs/Milogar/Views/login/Login.php</file>
-            <file>file:/C:/xampp/htdocs/Milogar/Views/login/forgot-password.php</file>
-            <file>file:/C:/xampp/htdocs/Milogar/Config/db.php</file>
+            <file>file:/C:/xampp/htdocs/Milogar/Views/RolesUsuarios/index.php</file>
+            <file>file:/C:/xampp/htdocs/Milogar/Models/RolModel.php</file>
+            <file>file:/C:/xampp/htdocs/Milogar/Controllers/CategoriaController.php</file>
+            <file>file:/C:/xampp/htdocs/Milogar/Models/SubcategoriaModel.php</file>
+            <file>file:/C:/xampp/htdocs/Milogar/Views/Usuarios/create.php</file>
             <file>file:/C:/xampp/htdocs/Milogar/Views/Menu.php</file>
+            <file>file:/C:/xampp/htdocs/Milogar/Views/RolesUsuarios/create.php</file>
+            <file>file:/C:/xampp/htdocs/Milogar/assets/js/validaciones.js</file>
+            <file>file:/C:/xampp/htdocs/Milogar/Views/Subcategorias/index.php</file>
+            <file>file:/C:/xampp/htdocs/Milogar/Views/Categorias/index.php</file>
+            <file>file:/C:/xampp/htdocs/Milogar/Views/RolesUsuarios/edit.php</file>
+            <file>file:/C:/xampp/htdocs/Milogar/Views/Categorias/create.php</file>
+            <file>file:/C:/xampp/htdocs/Milogar/Models/CategoriaModel.php</file>
+            <file>file:/C:/xampp/htdocs/Milogar/Views/RolesUsuarios/delete.php</file>
+            <file>file:/C:/xampp/htdocs/Milogar/Controllers/SubcategoriaController.php</file>
+            <file>file:/C:/xampp/htdocs/Milogar/Models/UsuarioModel.php</file>
+            <file>file:/C:/xampp/htdocs/Milogar/Views/Subcategorias/create.php</file>
+            <file>file:/C:/xampp/htdocs/Milogar/Views/Categorias/delete.php</file>
+            <file>file:/C:/xampp/htdocs/Milogar/Controllers/RolController.php</file>
         </group>
     </open-files>
 </project-private>

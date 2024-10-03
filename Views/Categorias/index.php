@@ -118,8 +118,8 @@ if (isset($_GET['action'])) {
                 <?php foreach ($categoria as $cat): ?>
                     <tr>
                         <td><?= $cat['id'] ?></td>
-                        <td><?= $cat['nombre'] ?></td>
-                        <td><?= $cat['descripcion'] ?></td>
+                        <td><?= $cat['nombreCategoria'] ?></td>
+                        <td><?= $cat['descripcionCategoria'] ?></td>
                         <td><?= $cat['IsActive'] ? 'Sí' : 'No' ?></td>
                         <td><?= $cat['fechaCreacion'] ?></td>
                         <td>
@@ -134,7 +134,7 @@ if (isset($_GET['action'])) {
                 <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="6">No hay roles disponibles</td>
+                    <td colspan="6">No hay categorías disponibles</td>
                 </tr>
             <?php endif; ?>
         </table>

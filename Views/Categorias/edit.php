@@ -21,10 +21,10 @@ if (isset($_GET['id'])) {
         <h1>Editar Categoría</h1>
         <form action="update.php?id=<?= $categoria['ID'] ?>" method="POST">
             <label for="nombreCategoria">Nombre :</label>
-            <input type="text" name="nombreCategoria" value="<?= htmlspecialchars($categoria['nombre']) ?>" required><br>
+            <input type="text" name="nombreCategoria" value="<?= htmlspecialchars($categoria['nombreCategoria']) ?>" required><br>
 
             <label for="categoriaDescription">Descripción:</label>
-            <textarea name="categoriaDescription" required><?= htmlspecialchars($categoria['descripcion']) ?></textarea><br>
+            <textarea name="categoriaDescription" required><?= htmlspecialchars($categoria['descripcionCategoria']) ?></textarea><br>
 
             <label for="isActive">Activo:</label>
             <input type="checkbox" name="isActive" <?= $categoria['IsActive'] ? 'checked' : '' ?>><br>

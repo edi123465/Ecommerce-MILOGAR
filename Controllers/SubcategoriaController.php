@@ -9,69 +9,80 @@ class SubcategoriaController {
         $this->conn = $db;
     }
 
-    // Obtener todas las subcategorías
     public function getAll() {
-        $query = "SELECT id, nombre, descripcion, categoria_id, isActive, fechaCreacion FROM " . $this->table;
+        $query = "SELECT id, nombrSubcategoria, descripcionSubcategoria, categoria_id, isActive, fechaCreacion FROM " . $this->table;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Para depuración
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if (empty($result)) {
+            echo "No se encontraron subcategorías."; // Mensaje de depuración
+        }
+        return $result;
     }
 
-    // Almacenar una nueva subcategoría
     public function store($data) {
-        $query = "INSERT INTO " . $this->table . " (nombre, descripcion, categoria_id, isActive, fechaCreacion) 
-                  VALUES (:nombre, :descripcion, :categoria_id, :isActive, GETDATE())"; // Usamos GETDATE() para SQL Server
+        // Imprimir los datos que se están recibiendo
+        var_dump($data); // Esto te permitirá ver los valores que estás intentando insertar
+
+        $query = "INSERT INTO " . $this->table . " (nombrSubcategoria, descripcionSubcategoria, categoria_id, isActive, fechaCreacion) 
+          VALUES (:nombrSubcategoria, :descripcionSubcategoria, :categoria_id, :isActive, GETDATE())";
         $stmt = $this->conn->prepare($query);
 
         // Vincular los parámetros
-        $stmt->bindParam(':nombre', $data['nombre']);
-        $stmt->bindParam(':descripcion', $data['descripcion']);
+        $stmt->bindParam(':nombrSubcategoria', $data['nombreSubcategoria']);
+        $stmt->bindParam(':descripcionSubcategoria', $data['descripcionSubcategoria']);
         $stmt->bindParam(':categoria_id', $data['categoria_id'], PDO::PARAM_INT);
         $stmt->bindParam(':isActive', $data['isActive'], PDO::PARAM_BOOL);
 
         // Ejecutar la consulta
         if ($stmt->execute()) {
-            echo "<script>alert('Subcategoría creada exitosamente');</script>";
-            header('Location: index.php');  // Puedes redirigir a la misma página u otra
-            exit;
+            // Iniciar sesión y guardar el mensaje
+            session_start(); // Asegúrate de que la sesión esté iniciada
+            $_SESSION['message'] = "Subcategoría creada exitosamente."; // Guardar el mensaje en la sesión
+            header('Location: index.php');  // Redirigir a la página de índice
+            exit; // Asegúrate de salir después de la redirección
         } else {
             // Captura el error si algo falla
             $errorInfo = $stmt->errorInfo();
             echo "Error en la base de datos: " . $errorInfo[2];
-            return false;
         }
     }
 
     // Obtener subcategoría por ID
     public function getById($id) {
-        $query = "SELECT id, nombre, descripcion, categoria_id, isActive FROM " . $this->table . " WHERE id = :id";
+        $query = "SELECT id, nombrSubcategoria, descripcionSubcategoria, categoria_id, isActive FROM " . $this->table . " WHERE id = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Actualizar subcategoría
     public function update($id, $data) {
-        $query = "UPDATE " . $this->table . " 
-                  SET nombre = :nombre, descripcion = :descripcion, categoria_id = :categoria_id, isActive = :isActive 
-                  WHERE id = :id";
-        $stmt = $this->conn->prepare($query);
+        // Prepara la consulta de actualización para la tabla subcategorias
+        $sql = "UPDATE " . $this->table . " SET 
+            nombrSubcategoria = :nombrSubcategoria,
+            descripcionSubcategoria = :descripcionSubcategoria,
+            categoria_id = :categoria_id,
+            isActive = :isActive" .
+                " WHERE id = :id"; // Asegúrate de que el campo de ID es el correcto
 
-        // Vincular los parámetros
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->bindParam(':nombre', $data['nombre']);
-        $stmt->bindParam(':descripcion', $data['descripcion']);
+        $stmt = $this->conn->prepare($sql);
+
+        // Enlazar parámetros
+        $stmt->bindParam(':nombrSubcategoria', $data['nombrSubcategoria']);
+        $stmt->bindParam(':descripcionSubcategoria', $data['descripcionSubcategoria']);
         $stmt->bindParam(':categoria_id', $data['categoria_id'], PDO::PARAM_INT);
         $stmt->bindParam(':isActive', $data['isActive'], PDO::PARAM_BOOL);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
         // Ejecutar la consulta
-        if ($stmt->execute()) {
-            echo "<script>alert('Subcategoría actualizada exitosamente');</script>";
-            return true;
-        } else {
-            $errorInfo = $stmt->errorInfo();
-            echo "Error al actualizar: " . $errorInfo[2];
+        try {
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            // Manejo de errores
+            echo "Error al actualizar la subcategoría: " . $e->getMessage();
             return false;
         }
     }

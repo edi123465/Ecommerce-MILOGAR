@@ -19,8 +19,7 @@ require_once "../../Models/CategoriaModel.php";
             <label for="IsActive">Activo:</label>
             <input type="checkbox" name="IsActive" value="1"><br>
 
-            <label for="CreatedAt">Fecha de Creación:</label>
-            <input type="datetime-local" id="CreatedAt" name="CreatedAt" required><br>
+
             <button type="submit">Guardar</button>
 
         </form>
